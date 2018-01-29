@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}主页{% endblock %}
+{% block content %}
+
+    {% if request.session.is_login %}
+        <div class="panel panel-default">
+  <!-- Default panel contents -->
+
+  <!-- Table -->
+  <table class="table">
+      <table class="table table-striped">
+        <thead>　　　　　　　　　　　　　　　　　
+            <tr>　　　　
+                <th>日期</th>　　　　　　　　　
+                <th>名称</th>
+                <th>摘要</th>
+                <th>金额</th>
+                <th>利率</th>
+                <th>利息金额</th>
+                <th>业务员</th>
+                <th>备注</th>
+                <th>到息日</th>
+                <th>联系方式</th>
+                <th>住址</th>
+                <th>抵押物</th>
+                <th>类型</th>
+                <th>抵押物位置</th>
+            </tr>
+        </thead>
+        <tbody>　　　　　　　　　　　　　　　　　　　　　
+{#        　＃表的主题内容#}
+            {% for customer in obj %}
+                <tr>
+                    <td>{{ customer.add_date |date:"Y-m-d"}}</td>　　　　　　
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.eventDetail }}</td>
+                    <td>{{ customer.money }}</td>
+                    <td>{{ customer.rate }}</td>
+                    <td>{{ customer.interest }}</td>
+                    <td>{{ customer.salesman}}</td>　　
+                    <td>{{ customer.note}}</td>　
+                    <td>{{ customer.daoxiri|date:"Y-m-d"}}</td>　
+                    <td>{{ customer.phone}}</td>　
+                    <td>{{ customer.addres}}</td>
+                    <td>{{ customer.mortgage }}</td>
+                    <td>{{ customer.type }}</td>
+                    <td>{{ customer.addresMortgage }}</td>
+
+                </tr>
+
+            {% endfor %}
+        </tbody>
+
+    </table>
+  </table>
+</div>
+<div style="float:right">
+<p>
+{# q.paginator.page_range 这个函数返回包含一个所有页码的range对象,也就是说 range(1, q.paginator.num_pages + 1) #}
+    {% for page_number in obj.paginator.page_range %}
+        {% ifequal page_number obj.number %}
+            <button type="button" class="btn btn-primary btn-sm active"> {{ page_number }} </button>
+        {% else %}
+            <a href="?page={{ page_number }}"> <button type="button" class="btn btn-default btn-sm">{{ page_number }} </button></a>
+        {% endifequal %}
+    {% endfor %}
+
+{#    <h1>你好,{{ request.session.user_name }}！欢迎回来！</h1>#}
+{#            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">#}
+{#                <h1 class="page-header" >{% block page-header %}客户信息表{% endblock %}</h1>#}
+{#            </div>#}
+
+    {% else %}
+    <h1 color #444>你尚未登录，只能访问公开内容！</h1>
+    {% endif %}
+
+
+{% endblock %}
+
+
+
